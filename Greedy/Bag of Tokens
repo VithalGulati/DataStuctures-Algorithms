@@ -36,3 +36,35 @@ Constraints:
 
 0 <= tokens.length <= 1000
 0 <= tokens[i], power < 104
+
+
+class Solution {
+public:
+    int bagOfTokensScore(vector<int>& tokens, int p) {
+        if(tokens.size()==0)    // if no token given
+            return 0;
+        if(p < *min_element(tokens.begin() , tokens.end())) // if he dont have enought strength to score 
+            return 0;
+        if(p >= accumulate(tokens.begin() , tokens.end() ,0))  // maxscore possible if and only if he have strength greater than sum of all tokens[i]..
+            return tokens.size();
+        
+        int score =0;
+        int start =0;
+        int end = tokens.size();
+        sort(tokens.begin() , tokens.end());   //sorting for choosing best one
+        while(start<end){      
+            if(p>=tokens[start]){
+                p-=tokens[start++];
+                score++;
+                
+            }else if(start + 1 == end){
+                break;
+            }
+            else if( score>0  ){
+                p+=tokens[--end];
+                score--;
+            }
+        }
+        return score;
+    }
+};
