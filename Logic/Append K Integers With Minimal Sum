@@ -19,6 +19,11 @@ Explanation: The six unique positive integers that do not appear in nums which w
 The resulting sum of nums is 5 + 6 + 1 + 2 + 3 + 4 + 7 + 8 = 36, which is the minimum. 
 The sum of the six integers appended is 1 + 2 + 3 + 4 + 7 + 8 = 25, so we return 25.
 
+
+
+
+
+
 class Solution {
 public:
     long long minimalKSum(vector<int>& nums, long long k) {
