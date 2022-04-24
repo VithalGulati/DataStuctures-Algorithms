@@ -1,0 +1,66 @@
+ou have n  tiles, where each tile has one letter tiles[i] printed on it.
+
+Return the number of possible non-empty sequences of letters you can make using the letters printed on those tiles.
+
+ 
+
+Example 1:
+
+Input: tiles = "AAB"
+Output: 8
+Explanation: The possible sequences are "A", "B", "AA", "AB", "BA", "AAB", "ABA", "BAA".
+Example 2:
+
+Input: tiles = "AAABBC"
+Output: 188
+Example 3:
+
+Input: tiles = "V"
+Output: 1
+ 
+
+Constraints:
+
+1 <= tiles.length <= 7
+tiles consists of uppercase English letters.
+
+class Solution {
+public:
+    // Idea is fill every possiable length of sequence possiable
+    // _ * _ * _ * _ 
+    // how many way we can fill first multiply how many way we can fill second
+    // like wise for all the length of string
+    // Explained better - https://leetcode.com/problems/letter-tile-possibilities/discuss/308284/Concise-java-solution
+
+    int numTilePossibilities(string ti) {
+        vector<int> count(26,0);
+        for(char ch : ti) count[ch-'A']++;
+        return dfs(count);
+    }
+    
+    
+    //first for all sequence of length 1
+    int dfs(vector<int>& count){
+        int sum = 0;
+        
+        for(int i = 0; i < 26; i++){
+            
+            //if the char is not present then continue
+            if(count[i] == 0) continue;
+            
+            //now we have found another substring
+            sum++;
+            
+            //imagine we have used it
+            count[i]--;
+            
+            //next look for substring of next bigger length
+            sum += dfs(count);
+            
+            //back track and fix the count so that we can use again
+            count[i]++;
+        }
+    
+        return sum;
+    }
+};
