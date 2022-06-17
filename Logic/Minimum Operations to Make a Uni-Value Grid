@@ -39,6 +39,9 @@ n == grid[i].length
 1 <= x, grid[i][j] <= 104
 
 
+
+
+
 class Solution {
 public:
     int minOperations(vector<vector<int>>& grid, int m) {
