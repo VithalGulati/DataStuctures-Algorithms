@@ -1,0 +1,74 @@
+Given an m x n matrix board containing 'X' and 'O', capture all regions that are 4-directionally surrounded by 'X'.
+
+A region is captured by flipping all 'O's into 'X's in that surrounded region.
+
+ 
+
+Example 1:
+
+
+Input: board = [["X","X","X","X"],["X","O","O","X"],["X","X","O","X"],["X","O","X","X"]]
+Output: [["X","X","X","X"],["X","X","X","X"],["X","X","X","X"],["X","O","X","X"]]
+Explanation: Surrounded regions should not be on the border, which means that any 'O' on the border of the board are not flipped to 'X'. Any 'O' that is not on the border and it is not connected to an 'O' on the border will be flipped to 'X'. Two cells are connected if they are adjacent cells connected horizontally or vertically.
+Example 2:
+
+Input: board = [["X"]]
+Output: [["X"]]
+ 
+
+Constraints:
+
+m == board.length
+n == board[i].length
+1 <= m, n <= 200
+board[i][j] is 'X' or 'O'.
+
+
+class Solution {
+public:
+    void solve(vector<vector<char>>& board) 
+    {
+        int row = board.size();
+        int col = board[0].size();
+        
+        for(int i = 1; i < row-1; i++)
+        {
+            for(int j = 1; j < col-1; j++)
+            {
+                dfs(board, i, 0);
+                dfs(board, i, col-1);
+                dfs(board, 0, j);
+                dfs(board, row-1, j);
+            }
+        }
+        
+        for(int i = 0; i < row; i++)
+        {
+            for(int j = 0; j < col; j++)
+            {    
+                if(i > 0 && i < row-1 && j > 0 && j < col-1 && board[i][j] == 'O')
+                {
+                    cout << i << j << " " << board[i][j] << endl;
+                    board[i][j] = 'X';
+                }
+                
+                if(board[i][j] == '#')
+                    board[i][j] = 'O';
+            }
+        }           
+    }
+    
+    void dfs(vector<vector<char>>& matrix, int x, int y)
+    {
+        if(x < 0 || x >= matrix.size() || y < 0 || y >= matrix[0].size() || matrix[x][y] != 'O')
+            return;
+        
+        if(matrix[x][y] == 'O')
+            matrix[x][y] = '#';
+        
+        dfs(matrix, x+1, y);
+        dfs(matrix, x, y-1);
+        dfs(matrix, x-1, y);
+        dfs(matrix, x, y+1);  
+    }
+};
