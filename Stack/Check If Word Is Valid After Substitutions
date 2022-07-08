@@ -34,22 +34,41 @@ Constraints:
 s consists of letters 'a', 'b', and 'c'
 
 
-lass Solution {
+class Solution {
 public:
-    bool isValid(string s) {
-        stack<char>stk;
-        for(char &c:s){
-            if(c=='a') stk.push('a');
-            if(c=='b'){
-                if(stk.empty() or stk.top()!='a') return false;
-                stk.push('b');
+    bool isValid(string str) {
+        stack<char>s;
+        for(auto x:str)
+        {
+            if(x=='a')
+            {
+                s.push(x);
             }
-            else if(c=='c'){
-                if(stk.empty() or stk.top()!='b') return false;
-                for(int i=0;i<2;i++) stk.pop();
+            else if(x=='b')
+            {
+                 if(s.empty() || s.top()!='a')
+               {
+                  return false;
+               }
+                else
+                {
+                    s.push(x);
+                }
             }
+            else
+            {
+                if((s.empty() || s.top()!='b' || s.size()<2))
+                   {
+                       return false;
+                   }
+                   else
+                   {
+                       s.pop();
+                       s.pop();
+                   }
+            }
+           
         }
-        if(stk.empty()) return true;
-        return false;
+        return s.empty();
     }
 };
